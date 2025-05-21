@@ -65,6 +65,11 @@ COPY --chown=python:python . .
 
 CMD ["python", "main.py"]
 
+![изображение](https://github.com/user-attachments/assets/38dcdfd9-fe93-41d4-98ed-85f2b0c92220)
+
+.env
+
+
 ![изображение](https://github.com/user-attachments/assets/adfb4ba0-237e-4e21-bdb4-6a335f773f0d)
 
 
