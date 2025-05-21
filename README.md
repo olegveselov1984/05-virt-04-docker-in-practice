@@ -42,40 +42,37 @@ See 'snap info docker' for additional versions.
 3. Создайте файл с именем ```Dockerfile.python``` для сборки данного проекта(для 3 задания изучите https://docs.docker.com/compose/compose-file/build/ ). Используйте базовый образ ```python:3.9-slim```. 
 Обязательно используйте конструкцию ```COPY . .``` в Dockerfile. Не забудьте исключить ненужные в имадже файлы с помощью dockerignore. Протестируйте корректность сборки.
 
-![изображение](https://github.com/user-attachments/assets/9d98332e-8a10-48d6-9a57-330b8a732700)
 
+Dockerfile.python:
 
 FROM python:3.9-slim as builder
 WORKDIR /app
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc
-
+RUN python -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
 COPY . . 
 RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
 
 FROM python:3.9-alpine as worker
 WORKDIR /app
-
 RUN addgroup --system python && \
     adduser --system --disabled-password  --ingroup python python && chown python:python /app
 USER python
-
+COPY --chown=python:python --from=builder /app/venv ./venv
 COPY --chown=python:python . .
-
+ENV PATH="/app/venv/bin:$PATH"
 CMD ["python", "main.py"]
 
-![изображение](https://github.com/user-attachments/assets/38dcdfd9-fe93-41d4-98ed-85f2b0c92220)
+![изображение](https://github.com/user-attachments/assets/340fd80a-813e-4b2b-91c6-d724df0b7502)
 
 .env
 
-
-![изображение](https://github.com/user-attachments/assets/adfb4ba0-237e-4e21-bdb4-6a335f773f0d)
-
+![изображение](https://github.com/user-attachments/assets/38dcdfd9-fe93-41d4-98ed-85f2b0c92220)
 
 docker build -t dockerfile.python -f Dockerfile.python .
 
-![изображение](https://github.com/user-attachments/assets/232936d9-29d9-4097-b222-343aca537494)
+![изображение](https://github.com/user-attachments/assets/62915106-85a2-4fa8-8e12-880cbb9dcd33)
 
 docker images
 
