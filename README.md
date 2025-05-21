@@ -35,10 +35,54 @@ See 'snap info docker' for additional versions.
 ## Задача 1
 1. Сделайте в своем github пространстве fork [репозитория](https://github.com/netology-code/shvirtd-example-python/blob/main/README.md).
    Примечание: В связи с доработкой кода python приложения. Если вы уверены что задание выполнено вами верно, а код python приложения работает с ошибкой то используйте вместо main.py файл not_tested_main.py(просто измените CMD)
+
+![изображение](https://github.com/user-attachments/assets/de476198-dddb-4391-bf40-1f59dbf709d9)
+
+   
 3. Создайте файл с именем ```Dockerfile.python``` для сборки данного проекта(для 3 задания изучите https://docs.docker.com/compose/compose-file/build/ ). Используйте базовый образ ```python:3.9-slim```. 
-Обязательно используйте конструкцию ```COPY . .``` в Dockerfile. Не забудьте исключить ненужные в имадже файлы с помощью dockerignore. Протестируйте корректность сборки.  
-4. (Необязательная часть, *) Изучите инструкцию в проекте и запустите web-приложение без использования docker в venv. (Mysql БД можно запустить в docker run).
-5. (Необязательная часть, *) По образцу предоставленного python кода внесите в него исправление для управления названием используемой таблицы через ENV переменную.
+Обязательно используйте конструкцию ```COPY . .``` в Dockerfile. Не забудьте исключить ненужные в имадже файлы с помощью dockerignore. Протестируйте корректность сборки.
+
+![изображение](https://github.com/user-attachments/assets/9d98332e-8a10-48d6-9a57-330b8a732700)
+
+
+FROM python:3.9-slim as builder
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc
+
+COPY . . 
+RUN --mount=type=cache,target=~/.cache/pip pip install -r requirements.txt
+
+FROM python:3.9-alpine as worker
+WORKDIR /app
+
+RUN addgroup --system python && \
+    adduser --system --disabled-password  --ingroup python python && chown python:python /app
+USER python
+
+COPY --chown=python:python . .
+
+CMD ["python", "main.py"]
+
+![изображение](https://github.com/user-attachments/assets/adfb4ba0-237e-4e21-bdb4-6a335f773f0d)
+
+
+docker build -t dockerfile.python -f Dockerfile.python .
+
+![изображение](https://github.com/user-attachments/assets/232936d9-29d9-4097-b222-343aca537494)
+
+docker images
+
+![изображение](https://github.com/user-attachments/assets/3ab4e743-9dfb-4433-adfc-f0938e55c2cb)
+
+
+
+
+
+
+5. (Необязательная часть, *) Изучите инструкцию в проекте и запустите web-приложение без использования docker в venv. (Mysql БД можно запустить в docker run).
+6. (Необязательная часть, *) По образцу предоставленного python кода внесите в него исправление для управления названием используемой таблицы через ENV переменную.
 ---
 ### ВНИМАНИЕ!
 !!! В процессе последующего выполнения ДЗ НЕ изменяйте содержимое файлов в fork-репозитории! Ваша задача ДОБАВИТЬ 5 файлов: ```Dockerfile.python```, ```compose.yaml```, ```.gitignore```, ```.dockerignore```,```bash-скрипт```. Если вам понадобилось внести иные изменения в проект - вы что-то делаете неверно!
