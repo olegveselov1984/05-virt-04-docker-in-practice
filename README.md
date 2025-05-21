@@ -80,7 +80,7 @@ docker images
 
 docker run --rm dockerfile.python
 
-![Uploading изображение.png…]()
+![изображение](https://github.com/user-attachments/assets/e2231778-2ee7-462f-9b7f-6a4cbab1d56b)
 
 
 5. (Необязательная часть, *) Изучите инструкцию в проекте и запустите web-приложение без использования docker в venv. (Mysql БД можно запустить в docker run).
