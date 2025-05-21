@@ -92,10 +92,20 @@ docker run --rm dockerfile.python
 
 ## Задача 2 (*)
 1. Создайте в yandex cloud container registry с именем "test" с помощью "yc tool" . [Инструкция](https://cloud.yandex.ru/ru/docs/container-registry/quickstart/?from=int-console-help)
+
+yc container registry create --name test
+   
 2. Настройте аутентификацию вашего локального docker в yandex container registry.
 3. Соберите и залейте в него образ с python приложением из задания №1.
+
+![изображение](https://github.com/user-attachments/assets/27580188-e227-4b53-9c5a-f5989749e1ef)
+
+   
 4. Просканируйте образ на уязвимости.
 5. В качестве ответа приложите отчет сканирования.
+
+![изображение](https://github.com/user-attachments/assets/108a476a-a478-48e1-9553-efcec37f5bd0)
+ 
 
 ## Задача 3
 1. Изучите файл "proxy.yaml"
