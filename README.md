@@ -222,6 +222,7 @@ cd ./blobs/sha256
 tar xf e0f55b34ca5dc362ab5757d39045589d45aaa6ffe70a3bb2d88b2939592a5806
 cp ./bin/terraform /tmp/terraform_copy
 
+![изображение](https://github.com/user-attachments/assets/1a1fc776-5549-4927-bdde-e56f1b415425)
 
 
 
@@ -229,6 +230,17 @@ cp ./bin/terraform /tmp/terraform_copy
 ## Задача 6.1
 Добейтесь аналогичного результата, используя docker cp.  
 Предоставьте скриншоты  действий .
+
+docker ps
+CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS                      NAMES
+8cd20719413f   wagoodman/dive:latest        "/usr/local/bin/dive…"   43 minutes ago   Up 43 minutes                              elegant_villani
+docker cp 8cd20719413f:/bin/ /tmp/bin_copy2
+!!! Контейнер должен быть запущен!!!
+![Uploading изображение.png…]()
+
+
+
+
 
 ## Задача 6.2 (**)
 Предложите способ извлечь файл из контейнера, используя только команду docker build и любой Dockerfile.  
