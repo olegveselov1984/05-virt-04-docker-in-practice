@@ -182,9 +182,29 @@ show databases; use virtd; show tables; SELECT * from requests LIMIT 10;
 1. Запустите в Yandex Cloud ВМ (вам хватит 2 Гб Ram).
 2. Подключитесь к Вм по ssh и установите docker.
 3. Напишите bash-скрипт, который скачает ваш fork-репозиторий в каталог /opt и запустит проект целиком.
+  GNU nano 7.2                                                                                                    my_project.sh                                                                                                   #!/bin/bash
+cd /home/user/my_project
+git clone https://github.com/olegveselov1984/shvirtd-example-python.git
+cd /home/user/my_project/shvirtd-example-python/
+docker compose up -d
+![изображение](https://github.com/user-attachments/assets/2bf09628-9bed-4921-a61a-a997373ac19d)
+
+![изображение](https://github.com/user-attachments/assets/fde05ee3-97a0-440e-9410-ee576bd987b4)
+
+
+
+
+
 4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и запустите проверку вашего сервиса ```http://<внешний_IP-адрес_вашей_ВМ>:8090```. Таким образом трафик будет направлен в ingress-proxy. ПРИМЕЧАНИЕ:  приложение main.py( в отличие от not_tested_main.py) весьма вероятно упадет под нагрузкой, но успеет обработать часть запросов - этого достаточно. Обновленная версия (main.py) не прошла достаточного тестирования временем, но должна справиться с нагрузкой.
 5. (Необязательная часть) Дополнительно настройте remote ssh context к вашему серверу. Отобразите список контекстов и результат удаленного выполнения ```docker ps -a```
 6. В качестве ответа повторите  sql-запрос и приложите скриншот с данного сервера, bash-скрипт и ссылку на fork-репозиторий.
+![изображение](https://github.com/user-attachments/assets/289be15c-c6e7-4f12-89be-718955237cdf)
+
+
+![изображение](https://github.com/user-attachments/assets/b6973989-1ff4-45d2-9a18-0ba9903eee34)
+
+
+
 
 ## Задача 5 (*)
 1. Напишите и задеплойте на вашу облачную ВМ bash скрипт, который произведет резервное копирование БД mysql в директорию "/opt/backup" с помощью запуска в сети "backend" контейнера из образа ```schnitzler/mysqldump``` при помощи ```docker run ...``` команды. Подсказка: "документация образа."
